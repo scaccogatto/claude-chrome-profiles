@@ -37,13 +37,9 @@ So the agent guesses, and logs into the client's dashboard with your personal ac
 
 ## How it works
 
-```
-list_connected_browsers ──► --resolve <deviceIds> ──► accounts connected
-                                                          │
-                  --for-path $PWD ──► account expected ───┴──► select the match
-                        │                                      (or open that profile)
-                        └── UNSET ──► ask once ──► --assign <repo> <email>
-```
+<p align="center">
+  <img src="docs/assets/flow.svg" alt="Flowchart: resolve connected browsers, force the per-repo account setup when it is unset, then select the browser signed into the expected account or open that profile" width="760" />
+</p>
 
 The plugin ships one skill, `chrome-profiles`, that loads only when a Chrome task
 starts, and one resolver script it drives. Nothing sits in your context the rest of

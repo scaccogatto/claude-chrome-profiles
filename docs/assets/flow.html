@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chrome-profiles flow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      /* Skin: the repo logo (.github/logo.svg): grey #8b919e, one blue accent. */
+      --color-paper:   #f5f5f5;
+      --color-ink:     #2d3142;
+      --color-muted:   #5f6573;
+      --color-accent:  #3b82f6;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1000px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    svg { width: 100%; min-width: 760px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Flowchart · chrome-profiles</p>
+    <h1>Picking the right Chrome</h1>
+
+    <svg viewBox="0 0 1000 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="flow-title flow-desc">
+      <title id="flow-title">Picking the right Chrome</title>
+      <desc id="flow-desc">Flowchart of the chrome-profiles skill: resolve connected browsers to Google accounts, force a one-time per-repo account setup when it is missing, then select the browser signed into the expected account or open that profile.</desc>
+      <defs>
+        <marker id="flow-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#8b919e"/></marker>
+        <marker id="flow-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#3b82f6"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#f5f5f5"/>
+
+      <!-- ===== Arrows (behind nodes) ===== -->
+      <g fill="none" stroke="#8b919e" stroke-width="1.2">
+        <!-- start -> d1 -->
+        <line x1="500" y1="72" x2="500" y2="103" marker-end="url(#flow-arrow)"/>
+        <!-- d1 NO -> set -->
+        <line x1="600" y1="160" x2="719" y2="160" marker-end="url(#flow-arrow)"/>
+        <!-- d1 YES -> merge 1 -->
+        <line x1="500" y1="216" x2="500" y2="244"/>
+        <!-- set -> merge 1 -->
+        <path d="M800 184 V240 Q800 248 792 248 H504"/>
+        <!-- merge 1 -> d2 -->
+        <line x1="500" y1="252" x2="500" y2="271" marker-end="url(#flow-arrow)"/>
+        <!-- d2 NO REPO -> session -->
+        <line x1="400" y1="328" x2="281" y2="328" marker-end="url(#flow-arrow)"/>
+        <!-- d2 YES -> merge 2 -->
+        <line x1="500" y1="384" x2="500" y2="412"/>
+        <!-- session -> merge 2 -->
+        <path d="M200 352 V408 Q200 416 208 416 H496"/>
+        <!-- merge 2 -> d3 -->
+        <line x1="500" y1="420" x2="500" y2="439" marker-end="url(#flow-arrow)"/>
+        <!-- d3 NO -> open -->
+        <line x1="600" y1="496" x2="719" y2="496" marker-end="url(#flow-arrow)"/>
+        <!-- d3 YES -> end -->
+        <line x1="500" y1="552" x2="500" y2="591" marker-end="url(#flow-arrow)"/>
+        <!-- open -> end -->
+        <path d="M800 520 V608 Q800 616 792 616 H581" marker-end="url(#flow-arrow)"/>
+      </g>
+      <!-- focal path: UNSET forces setup -->
+      <g fill="none" stroke="#3b82f6" stroke-width="1.4">
+        <line x1="600" y1="328" x2="719" y2="328" marker-end="url(#flow-arrow-accent)"/>
+        <path d="M800 352 V408 Q800 416 792 416 H504"/>
+      </g>
+
+      <!-- ===== Arrow labels (masked, 8px above/beside the stroke) ===== -->
+      <g font-family="'Geist Mono', ui-monospace, monospace" font-size="8" text-anchor="middle" letter-spacing="0.12em">
+        <rect x="628" y="140" width="64" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="660" y="149" fill="#5f6573">UNKNOWN</text>
+
+        <rect x="508" y="224" width="32" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="524" y="233" fill="#5f6573">YES</text>
+
+        <rect x="624" y="308" width="72" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="660" y="317" fill="#3b82f6">UNSET · 3</text>
+
+        <rect x="300" y="308" width="80" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="340" y="317" fill="#5f6573">NO REPO · 2</text>
+
+        <rect x="508" y="392" width="32" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="524" y="401" fill="#5f6573">SET</text>
+
+        <rect x="644" y="476" width="32" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="660" y="485" fill="#5f6573">NO</text>
+
+        <rect x="508" y="566" width="32" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="524" y="575" fill="#5f6573">YES</text>
+
+        <rect x="644" y="596" width="72" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="680" y="605" fill="#5f6573">CONNECTS</text>
+      </g>
+
+      <!-- ===== Nodes ===== -->
+      <!-- start oval -->
+      <rect x="420" y="24" width="160" height="48" rx="24" fill="#f5f5f5"/>
+      <rect x="420" y="24" width="160" height="48" rx="24" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+      <text x="500" y="46" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Chrome task starts</text>
+      <text x="500" y="61" fill="#5f6573" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">list_connected_browsers</text>
+
+      <!-- d1: resolve -->
+      <polygon points="500,104 600,160 500,216 400,160" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="500" y="152" fill="#5f6573" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">--resolve</text>
+      <text x="500" y="168" fill="#2d3142" font-size="11" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">All browsers known?</text>
+
+      <!-- set -->
+      <rect x="720" y="136" width="160" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="800" y="157" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Ask which profile</text>
+      <text x="800" y="172" fill="#5f6573" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">--set uuid profile</text>
+
+      <!-- merge 1 -->
+      <circle cx="500" cy="248" r="4" fill="#2d3142"/>
+
+      <!-- d2: for-path -->
+      <polygon points="500,272 600,328 500,384 400,328" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="500" y="320" fill="#5f6573" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">--for-path $PWD</text>
+      <text x="500" y="336" fill="#2d3142" font-size="11" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Repo account set?</text>
+
+      <!-- session only -->
+      <rect x="120" y="304" width="160" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="200" y="325" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Ask, this session</text>
+      <text x="200" y="340" fill="#5f6573" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">nothing persisted</text>
+
+      <!-- assign (focal) -->
+      <rect x="720" y="304" width="160" height="48" rx="6" fill="rgba(59,130,246,0.08)" stroke="#3b82f6" stroke-width="1"/>
+      <text x="800" y="325" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Ask which account</text>
+      <text x="800" y="340" fill="#5f6573" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">--assign repo email</text>
+
+      <!-- merge 2 -->
+      <circle cx="500" cy="416" r="4" fill="#2d3142"/>
+
+      <!-- d3: connected -->
+      <polygon points="500,440 600,496 500,552 400,496" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="500" y="492" fill="#2d3142" font-size="11" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Expected account</text>
+      <text x="500" y="506" fill="#2d3142" font-size="11" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">connected?</text>
+
+      <!-- open profile -->
+      <rect x="720" y="472" width="160" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="800" y="493" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Open that profile</text>
+      <text x="800" y="508" fill="#5f6573" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">poll 3s, up to 30s</text>
+
+      <!-- end oval -->
+      <rect x="420" y="592" width="160" height="48" rx="24" fill="#f5f5f5"/>
+      <rect x="420" y="592" width="160" height="48" rx="24" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+      <text x="500" y="614" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Select that browser</text>
+      <text x="500" y="629" fill="#5f6573" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">by Google account</text>
+
+      <!-- ===== Legend ===== -->
+      <g font-family="'Geist', system-ui, sans-serif" font-size="8.5" fill="#5f6573">
+        <line x1="40" y1="664" x2="960" y2="664" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+        <text x="40" y="680" font-family="'Geist Mono', ui-monospace, monospace" font-size="8" letter-spacing="0.18em">LEGEND · SHAPE CARRIES TYPE · N = RESOLVER EXIT CODE</text>
+
+        <rect x="40" y="692" width="24" height="12" rx="6" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+        <text x="72" y="702">Start / end</text>
+
+        <rect x="180" y="692" width="24" height="12" rx="2" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+        <text x="212" y="702">Step</text>
+
+        <polygon points="300,698 312,692 324,698 312,704" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+        <text x="336" y="702">Decision</text>
+
+        <circle cx="432" cy="698" r="3" fill="#2d3142"/>
+        <text x="444" y="702">Merge</text>
+
+        <line x1="520" y1="698" x2="548" y2="698" stroke="#3b82f6" stroke-width="1.4" marker-end="url(#flow-arrow-accent)"/>
+        <text x="556" y="702">Forced one-time setup (per repo, local git config)</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

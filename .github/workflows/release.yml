@@ -1,0 +1,37 @@
+name: release
+
+# Auto-release on version bump: when a push to main changes the plugin version,
+# tag it and publish a GitHub release. Idempotent: if the release already
+# exists, it does nothing. Bumping .claude-plugin/plugin.json is the whole trigger.
+on:
+  push:
+    branches: [main]
+    paths: ['.claude-plugin/plugin.json']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Tag & release if the version is new
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+        run: |
+          version="$(jq -r .version .claude-plugin/plugin.json)"
+          tag="v${version}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "release $tag already exists, nothing to do"
+            exit 0
+          fi
+          gh release create "$tag" \
+            --target "$SHA" \
+            --title "chrome-profiles v${version}" \
+            --generate-notes

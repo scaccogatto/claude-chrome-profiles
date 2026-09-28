@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Every job here only reads the checkout; pin the token to match.
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # Pinned image and SHA-pinned actions: a moving label or a re-pointed tag
+    # cannot change what runs here without a commit in this repo.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Validate plugin & marketplace manifests
+        run: jq empty .claude-plugin/plugin.json .claude-plugin/marketplace.json
+
+      # The resolver is stdlib-only Python and the self-check runs against a
+      # synthetic Chrome tree and throwaway git repos, so no real Chrome and no
+      # macOS runner are needed.
+      - name: Resolver self-check
+        run: make test

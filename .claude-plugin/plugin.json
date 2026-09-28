@@ -1,0 +1,15 @@
+{
+  "name": "chrome-profiles",
+  "displayName": "Chrome Profiles",
+  "version": "0.1.0",
+  "description": "Pick the right Chrome for Claude in Chrome: identify browsers by their signed-in Google account and enforce the account each repo expects.",
+  "author": {
+    "name": "Marco Boffo",
+    "email": "chat@marcoboffo.me",
+    "url": "https://github.com/scaccogatto"
+  },
+  "homepage": "https://github.com/scaccogatto/claude-chrome-profiles",
+  "repository": "https://github.com/scaccogatto/claude-chrome-profiles",
+  "license": "MIT",
+  "keywords": ["chrome", "claude-in-chrome", "browser", "profiles", "google-account", "multi-account"]
+}

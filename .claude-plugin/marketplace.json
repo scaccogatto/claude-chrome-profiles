@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "claude-chrome-profiles",
+  "description": "Chrome profile resolution for Claude in Chrome.",
+  "owner": {
+    "name": "Marco Boffo",
+    "email": "chat@marcoboffo.me"
+  },
+  "plugins": [
+    {
+      "name": "chrome-profiles",
+      "source": "./",
+      "description": "Identify Claude in Chrome browsers by their signed-in Google account and enforce the account each repo expects.",
+      "category": "productivity",
+      "keywords": ["chrome", "claude-in-chrome", "browser", "profiles"],
+      "license": "MIT"
+    }
+  ]
+}
